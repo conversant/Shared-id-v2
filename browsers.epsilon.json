@@ -1,0 +1,57 @@
+{
+  "sl_firefox_66_windows_10": {
+    "base": "SauceLabs",
+    "browserName": "firefox",
+    "platform": "Windows 10",
+    "version": "66.0"
+  },
+  "sl_safari_14_mac_big_sur": {
+    "base": "SauceLabs",
+    "browserName": "safari",
+    "platform": "macOS 11",
+    "version": "14"
+  },
+  "sl_safari_17_mac_ventura": {
+    "base": "SauceLabs",
+    "browserName": "safari",
+    "platform": "macOS 13",
+    "version": "17"
+  },
+  "sl_edge_79_windows_10": {
+    "base": "SauceLabs",
+    "browserName": "MicrosoftEdge",
+    "platform": "Windows 10",
+    "version": "79"
+  },
+  "sl_edge_80_windows_10": {
+    "base": "SauceLabs",
+    "browserName": "MicrosoftEdge",
+    "platform": "Windows 10",
+    "version": "80.0"
+  },
+  "sl_chrome_latest_windows_11": {
+    "base": "SauceLabs",
+    "browserName": "chrome",
+    "platform": "Windows 11",
+    "version": "latest"
+  },
+  "sl_safari_ios_14": {
+    "base": "SauceLabs",
+    "browserName": "Safari",
+    "platformName": "iOS",
+    "platformVersion": "14",
+    "deviceName": "iPhone Simulator",
+    "appiumVersion": "1.22.3",
+    "deviceOrientation": "portrait"
+  },
+  "sl_chrome_android_8": {
+    "base": "SauceLabs",
+    "browserName": "Chrome",
+    "platform": "Android",
+    "appium:platformVersion": "8.0",
+    "appium:deviceName": "Google Pixel Emulator",
+    "appium:automationName": "UiAutomator2",
+    "appiumVersion": "2.11.0",
+    "deviceOrientation": "portrait"
+  }
+}
