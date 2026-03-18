@@ -130,6 +130,40 @@ describe('sc-start signal handler deferred exit', () => {
     });
 });
 
+describe('sc-start SC exit code logging', () => {
+    let consoleErrorStub;
+
+    beforeEach(() => {
+        consoleErrorStub = sinon.stub(console, 'error');
+    });
+
+    afterEach(() => {
+        consoleErrorStub.restore();
+    });
+
+    function logIfUnexpectedExit(code) {
+        if (code !== 0 && code !== null) {
+            console.error(`Sauce Connect exited with code ${code}`);
+        }
+    }
+
+    it('logs an error message when SC exits with a non-zero code', () => {
+        logIfUnexpectedExit(1);
+        expect(consoleErrorStub.calledOnce).to.be.true;
+        expect(consoleErrorStub.firstCall.args[0]).to.include('1');
+    });
+
+    it('does not log when SC exits cleanly with code 0', () => {
+        logIfUnexpectedExit(0);
+        expect(consoleErrorStub.called).to.be.false;
+    });
+
+    it('does not log when code is null (normal signal termination)', () => {
+        logIfUnexpectedExit(null);
+        expect(consoleErrorStub.called).to.be.false;
+    });
+});
+
 describe('sc-start cleanup() guard', () => {
     it('calls kill when sc is not yet killed', () => {
         const sc = { killed: false, kill: sinon.spy() };

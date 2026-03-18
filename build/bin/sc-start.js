@@ -61,6 +61,9 @@ if (!runTests) {
     });
 
     sc.on('close', (code) => {
+        if (code !== 0 && code !== null) {
+            console.error(`Sauce Connect exited with code ${code}`);
+        }
         if (testsProcess && !testsProcess.killed) {
             console.error('Sauce Connect exited unexpectedly, killing test process...');
             testsProcess.kill('SIGTERM');
