@@ -4,9 +4,7 @@ const pkg = require('./package.json');
 
 const title = `${pkg.name} ${pkg.version} unit tests`;
 
-const tunnelName = process.env.SAUCE_TUNNEL_NAME 
-    || process.env.BAMBOO_BUILD_KEY 
-    || `${process.env.USER || process.env.USERNAME || 'local'}-sharedid-dev`;
+const tunnelName = require('./scripts/tunnelName');
 
 console.log(`Using Sauce Connect tunnel: ${tunnelName}`);
 

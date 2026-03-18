@@ -6,9 +6,7 @@ const path = require('path');
 const args = process.argv.slice(2);
 const runTests = args.includes('--run-tests');
 
-const tunnelName = process.env.SAUCE_TUNNEL_NAME
-    || process.env.BAMBOO_BUILD_KEY
-    || `${process.env.USER || process.env.USERNAME || 'local'}-sharedid-dev`;
+const tunnelName = require('./tunnelName');
 
 const READY_URL = 'http://localhost:8032/readyz';
 
