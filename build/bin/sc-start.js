@@ -39,6 +39,7 @@ if (!runTests) {
     });
 } else {
     let testExitCode = 1;
+    let testsProcess = null;
 
     const cleanup = () => {
         if (sc && !sc.killed) {
@@ -58,6 +59,10 @@ if (!runTests) {
     });
 
     sc.on('close', (code) => {
+        if (testsProcess && !testsProcess.killed) {
+            console.error('Sauce Connect exited unexpectedly, killing test process...');
+            testsProcess.kill('SIGTERM');
+        }
         process.exit(testExitCode);
     });
 
@@ -101,18 +106,18 @@ if (!runTests) {
         console.log('Running sauce tests...\n');
         
         const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-        const tests = spawn(npm, ['run', 'sauce:epsilon'], { 
+        testsProcess = spawn(npm, ['run', 'sauce:epsilon'], { 
             stdio: 'inherit',
             cwd: path.resolve(__dirname, '../..')
         });
 
-        tests.on('error', (err) => {
+        testsProcess.on('error', (err) => {
             console.error('Failed to run tests:', err.message);
             testExitCode = 1;
             cleanup();
         });
 
-        tests.on('close', (code) => {
+        testsProcess.on('close', (code) => {
             testExitCode = code || 0;
             console.log(`\nTests completed with exit code: ${testExitCode}`);
             cleanup();
