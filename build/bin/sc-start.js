@@ -43,7 +43,7 @@ if (!runTests) {
     let signalExitCode = null;
 
     const cleanup = () => {
-        if (sc && !sc.killed) {
+        if (!sc.killed) {
             console.log('\nStopping Sauce Connect...');
             sc.kill('SIGTERM');
         }

@@ -130,6 +130,26 @@ describe('sc-start signal handler deferred exit', () => {
     });
 });
 
+describe('sc-start cleanup() guard', () => {
+    it('calls kill when sc is not yet killed', () => {
+        const sc = { killed: false, kill: sinon.spy() };
+        const cleanup = () => {
+            if (!sc.killed) sc.kill('SIGTERM');
+        };
+        cleanup();
+        expect(sc.kill.calledOnceWith('SIGTERM')).to.be.true;
+    });
+
+    it('does not call kill when sc is already killed', () => {
+        const sc = { killed: true, kill: sinon.spy() };
+        const cleanup = () => {
+            if (!sc.killed) sc.kill('SIGTERM');
+        };
+        cleanup();
+        expect(sc.kill.called).to.be.false;
+    });
+});
+
 describe('sc-start test exit code on tests process close', () => {
     function resolveTestExitCode(code) {
         return code ?? 1;
