@@ -130,6 +130,53 @@ describe('sc-start signal handler deferred exit', () => {
     });
 });
 
+describe('sc-start waitForReady loop check-first behaviour', () => {
+    it('calls checkReady before the first sleep', async () => {
+        const calls = [];
+        const interval = 2000;
+        const maxWait = 4000;
+        let waited = 0;
+
+        const checkReady = async () => {
+            calls.push({ type: 'check', waited });
+            return false;
+        };
+        const sleep = async () => {
+            calls.push({ type: 'sleep' });
+        };
+
+        while (waited <= maxWait) {
+            await checkReady();
+            await sleep();
+            waited += interval;
+        }
+
+        expect(calls[0].type).to.equal('check');
+        expect(calls[0].waited).to.equal(0);
+    });
+
+    it('exits immediately when checkReady returns true on the first poll', async () => {
+        let ranTests = false;
+        const interval = 2000;
+        const maxWait = 120000;
+        let waited = 0;
+
+        const checkReady = async () => true;
+
+        while (waited <= maxWait) {
+            const ready = await checkReady();
+            if (ready) {
+                ranTests = true;
+                break;
+            }
+            waited += interval;
+        }
+
+        expect(ranTests).to.be.true;
+        expect(waited).to.equal(0);
+    });
+});
+
 describe('sc-start SC exit code logging', () => {
     let consoleErrorStub;
 

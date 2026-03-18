@@ -94,15 +94,15 @@ if (!runTests) {
 
         console.log(`Waiting for Sauce Connect to be ready (polling ${READY_URL})...`);
 
-        while (waited < maxWait) {
+        while (waited <= maxWait) {
             const ready = await checkReady();
             if (ready) {
                 console.log('Sauce Connect is ready!\n');
                 runSauceTests();
                 return;
             }
-            waited += interval;
             await new Promise(r => setTimeout(r, interval));
+            waited += interval;
         }
 
         console.error('Timeout waiting for Sauce Connect to be ready');
