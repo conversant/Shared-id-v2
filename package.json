@@ -11,8 +11,8 @@
     "coverage": "karma start --coverage",
     "sauce": "karma start karma.saucelabs.js",
     "sauce:epsilon": "karma start karma.saucelabs.epsilon.js",
-    "sc:start": "node build/bin/sc-start.js",
-    "sc:test": "node build/bin/sc-start.js --run-tests",
+    "sc:start": "node scripts/sc-start.js",
+    "sc:test": "node scripts/sc-start.js --run-tests",
     "test:scripts": "mocha 'test/scripts/**/*.spec.js'",
     "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
@@ -65,6 +65,7 @@
     "README.md",
     "src",
     "dist",
-    "!dist/stats.json"
+    "!dist/stats.json",
+    "!scripts"
   ]
 }

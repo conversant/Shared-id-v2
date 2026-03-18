@@ -116,7 +116,7 @@ if (!runTests) {
         const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
         testsProcess = spawn(npm, ['run', 'sauce:epsilon'], { 
             stdio: 'inherit',
-            cwd: path.resolve(__dirname, '../..')
+            cwd: path.resolve(__dirname, '..')
         });
 
         testsProcess.on('error', (err) => {
