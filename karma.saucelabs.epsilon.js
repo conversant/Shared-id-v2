@@ -33,10 +33,10 @@ module.exports = function(config) {
 
         browsers: Object.keys(browsers),
         customLaunchers: browsers,
-        browserDisconnectTimeout: 10000,
-        browserDisconnectTolerance: 1,
-        browserNoActivityTimeout:  4 * 60 * 1000,
-        captureTimeout: 4 * 60 * 1000,
+        browserDisconnectTimeout: 10000,       // default 2000
+        browserDisconnectTolerance: 1,          // default 0
+        browserNoActivityTimeout:  4 * 60 * 1000, // default 10000
+        captureTimeout: 4 * 60 * 1000,          // default 60000
         concurrency: 2,
         singleRun: true,
     });
