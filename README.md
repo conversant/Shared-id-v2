@@ -18,7 +18,61 @@ Javascripts that supports Publisher Common ID will look for window.PublisherComm
     
 ## Run Unit Tests
     $ npm run test
-    
+
+## SauceLabs Testing (SC5 / Epsilon Pipeline)
+
+The epsilon pipeline uses an externally managed Sauce Connect 5 (`sc` CLI) tunnel
+instead of the tunnel built into `karma-sauce-launcher`.
+
+### Prerequisites
+
+1. Install the SC5 CLI and make `sc` available on your `PATH`.
+   Download from: https://docs.saucelabs.com/secure-connections/sauce-connect-5/
+
+2. Export your Sauce Labs credentials:
+   ```
+   export SAUCE_USERNAME=<your-username>
+   export SAUCE_ACCESS_KEY=<your-access-key>
+   ```
+
+### Tunnel name resolution
+
+The tunnel name is resolved in priority order from:
+
+| Variable | Example value | Use case |
+|---|---|---|
+| `SAUCE_TUNNEL_NAME` | `my-custom-tunnel` | Override in any environment |
+| `BAMBOO_BUILD_KEY` | `PROJ-42` | Set automatically by Bamboo CI |
+| `USER` / `USERNAME` | `alice` | Local POSIX / Windows developer |
+| *(fallback)* | `local-sharedid-dev` | No env vars set |
+
+### Running SauceLabs tests locally
+
+Start the tunnel only (leaves it running until you Ctrl-C):
+
+    $ npm run sc:start
+
+Start the tunnel and run the epsilon test suite automatically:
+
+    $ npm run sc:test
+
+### Running the full CI suite (epsilon)
+
+    $ npm run test-bamboo:epsilon
+
+This runs: lint → SC5 tunnel + epsilon Karma tests → coverage report.
+
+### Script overview
+
+| Script | Description |
+|---|---|
+| `npm run sauce` | Run SauceLabs tests (legacy SC4 via karma-sauce-launcher) |
+| `npm run sauce:epsilon` | Run Karma against an already-running SC5 tunnel |
+| `npm run sc:start` | Start SC5 tunnel only |
+| `npm run sc:test` | Start SC5 tunnel then run `sauce:epsilon` automatically |
+| `npm run test-bamboo` | CI: lint + sauce (SC4) + coverage |
+| `npm run test-bamboo:epsilon` | CI: lint + sc:test (SC5) + coverage |
+
 ## Build
     $ npm run build
     
