@@ -13,6 +13,7 @@
     "sauce:epsilon": "karma start karma.saucelabs.epsilon.js",
     "sc:start": "node build/bin/sc-start.js",
     "sc:test": "node build/bin/sc-start.js --run-tests",
+    "test:scripts": "mocha 'test/scripts/**/*.spec.js'",
     "bundle-report": "webpack-bundle-analyzer --port 4200 dist/stats.json"
   },
   "repository": {

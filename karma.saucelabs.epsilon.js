@@ -6,7 +6,7 @@ const title = `${pkg.name} ${pkg.version} unit tests`;
 
 const tunnelName = process.env.SAUCE_TUNNEL_NAME 
     || process.env.BAMBOO_BUILD_KEY 
-    || `${process.env.USER || 'local'}-sharedid-dev`;
+    || `${process.env.USER || process.env.USERNAME || 'local'}-sharedid-dev`;
 
 console.log(`Using Sauce Connect tunnel: ${tunnelName}`);
 
