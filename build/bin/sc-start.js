@@ -123,7 +123,7 @@ if (!runTests) {
         });
 
         testsProcess.on('close', (code) => {
-            testExitCode = code || 0;
+            testExitCode = code ?? 1;
             console.log(`\nTests completed with exit code: ${testExitCode}`);
             cleanup();
         });

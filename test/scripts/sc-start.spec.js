@@ -129,3 +129,22 @@ describe('sc-start signal handler deferred exit', () => {
         expect(exitedWith).to.equal(0);
     });
 });
+
+describe('sc-start test exit code on tests process close', () => {
+    function resolveTestExitCode(code) {
+        return code ?? 1;
+    }
+
+    it('preserves a zero exit code when tests pass', () => {
+        expect(resolveTestExitCode(0)).to.equal(0);
+    });
+
+    it('preserves a non-zero exit code when tests fail', () => {
+        expect(resolveTestExitCode(1)).to.equal(1);
+        expect(resolveTestExitCode(2)).to.equal(2);
+    });
+
+    it('returns 1 for null (signal-killed process) instead of masking it as success', () => {
+        expect(resolveTestExitCode(null)).to.equal(1);
+    });
+});
