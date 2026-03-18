@@ -21,7 +21,7 @@
     "base": "SauceLabs",
     "browserName": "MicrosoftEdge",
     "platform": "Windows 10",
-    "version": "79"
+    "version": "79.0"
   },
   "sl_edge_80_windows_10": {
     "base": "SauceLabs",

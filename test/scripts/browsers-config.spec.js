@@ -16,6 +16,15 @@ describe('browsers.epsilon.json Appium field consistency', () => {
         });
     });
 
+    it('all Edge entries use consistent major.minor version string format', () => {
+        const edgeEntries = Object.entries(browsersEpsilon).filter(
+            ([, cfg]) => cfg.browserName === 'MicrosoftEdge'
+        );
+        edgeEntries.forEach(([name, cfg]) => {
+            expect(cfg.version, `${name} version should be in major.minor format`).to.match(/^\d+\.\d+$/);
+        });
+    });
+
     it('no mobile entry contains appium:-prefixed keys mixed with un-prefixed equivalents', () => {
         mobileEntries.forEach(([name, cfg]) => {
             const keys = Object.keys(cfg);
