@@ -40,6 +40,7 @@ if (!runTests) {
 } else {
     let testExitCode = 1;
     let testsProcess = null;
+    let signalExitCode = null;
 
     const cleanup = () => {
         if (sc && !sc.killed) {
@@ -49,19 +50,23 @@ if (!runTests) {
     };
 
     process.on('SIGINT', () => {
+        signalExitCode = 130;
         cleanup();
-        process.exit(130);
+        // sc.on('close') drives the actual exit once SC has deregistered
     });
 
     process.on('SIGTERM', () => {
+        signalExitCode = 143;
         cleanup();
-        process.exit(143);
     });
 
     sc.on('close', (code) => {
         if (testsProcess && !testsProcess.killed) {
             console.error('Sauce Connect exited unexpectedly, killing test process...');
             testsProcess.kill('SIGTERM');
+        }
+        if (signalExitCode !== null) {
+            process.exit(signalExitCode);
         }
         process.exit(testExitCode);
     });

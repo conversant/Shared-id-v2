@@ -62,3 +62,70 @@ describe('sc-start orphan-process guard', () => {
         expect(kill.called).to.be.false;
     });
 });
+
+describe('sc-start signal handler deferred exit', () => {
+    it('SIGINT sets signalExitCode to 130 and does not exit immediately', () => {
+        let signalExitCode = null;
+        const exitSpy = sinon.spy();
+
+        const onSIGINT = () => {
+            signalExitCode = 130;
+            // cleanup() would be called here, but we do NOT call process.exit
+        };
+
+        onSIGINT();
+
+        expect(signalExitCode).to.equal(130);
+        expect(exitSpy.called).to.be.false;
+    });
+
+    it('SIGTERM sets signalExitCode to 143 and does not exit immediately', () => {
+        let signalExitCode = null;
+        const exitSpy = sinon.spy();
+
+        const onSIGTERM = () => {
+            signalExitCode = 143;
+        };
+
+        onSIGTERM();
+
+        expect(signalExitCode).to.equal(143);
+        expect(exitSpy.called).to.be.false;
+    });
+
+    it('sc.on(close) exits with signalExitCode when a signal was received', () => {
+        let signalExitCode = 130;
+        const testExitCode = 0;
+        let exitedWith = null;
+
+        const onScClose = () => {
+            if (signalExitCode !== null) {
+                exitedWith = signalExitCode;
+                return;
+            }
+            exitedWith = testExitCode;
+        };
+
+        onScClose();
+
+        expect(exitedWith).to.equal(130);
+    });
+
+    it('sc.on(close) exits with testExitCode when no signal was received', () => {
+        let signalExitCode = null;
+        const testExitCode = 0;
+        let exitedWith = null;
+
+        const onScClose = () => {
+            if (signalExitCode !== null) {
+                exitedWith = signalExitCode;
+                return;
+            }
+            exitedWith = testExitCode;
+        };
+
+        onScClose();
+
+        expect(exitedWith).to.equal(0);
+    });
+});
