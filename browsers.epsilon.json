@@ -47,10 +47,10 @@
   "sl_chrome_android_8": {
     "base": "SauceLabs",
     "browserName": "Chrome",
-    "platform": "Android",
-    "appium:platformVersion": "8.0",
-    "appium:deviceName": "Google Pixel Emulator",
-    "appium:automationName": "UiAutomator2",
+    "platformName": "Android",
+    "platformVersion": "8.0",
+    "deviceName": "Google Pixel Emulator",
+    "automationName": "UiAutomator2",
     "appiumVersion": "2.11.0",
     "deviceOrientation": "portrait"
   }
