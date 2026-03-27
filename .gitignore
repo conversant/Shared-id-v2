@@ -4,3 +4,5 @@ dist/
 *.iml
 mocha.json
 coverage
+sc-karma-sauce*
+.DS_Store
